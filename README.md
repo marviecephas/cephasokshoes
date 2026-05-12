@@ -45,7 +45,8 @@ Create a `.env` file in the root directory:
 ```plaintext
 GEMINI_API_KEY=your_gemini_key
 TWILIO_SID=your_twilio_sid
-TWILIO_AUTH_TOKEN=your_auth_token```
+TWILIO_AUTH_TOKEN=your_auth_token
+```
 
 ### 3. Initialize & Run
 ```bash
