@@ -36,7 +36,8 @@ git clone [https://github.com/marviecephas/cephasokshoes.git](https://github.com
 cd cephasokshoes
 python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt```
+pip install -r requirements.txt
+```
 
 ### 2. Environment Setup
 Create a `.env` file in the root directory:
@@ -49,13 +50,15 @@ TWILIO_AUTH_TOKEN=your_auth_token```
 ### 3. Initialize & Run
 ```bash
 python manage.py migrate
-python manage.py runserver```
+python manage.py runserver
+```
 
 ### 4. Tunneling
 In a new Termux session, run:
 
 ```bash
-cloudflared tunnel --url [http://127.0.0.1:8000](http://127.0.0.1:8000)```
+cloudflared tunnel --url [http://127.0.0.1:8000](http://127.0.0.1:8000)
+```
 
 ## 📜 License
 
