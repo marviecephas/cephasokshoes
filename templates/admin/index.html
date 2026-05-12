@@ -1,0 +1,12 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+    <div style="margin-bottom: 25px;">
+        <a href="{% url 'admin:business-dashboard' %}" 
+           style="display: block; background: #417690; color: white; padding: 22px; text-align: center; border-radius: 12px; font-weight: bold; text-decoration: none; font-size: 1.3rem; border: 2px solid #417690; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+            📊 VIEW BUSINESS DASHBOARD
+        </a>
+    </div>
+
+    {{ block.super }}
+{% endblock %}

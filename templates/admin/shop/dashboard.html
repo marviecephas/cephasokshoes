@@ -1,0 +1,145 @@
+{% extends "admin/base_site.html" %}
+{% block content_title %}
+<style>
+    /* 1. Layout & Colors (Django Standard) */
+    :root {
+        --dj-teal: #092e20;   /* Original Django header green */
+        --dj-accent: #417690; /* Django link blue */
+        --dj-yellow: #f5dd5d; /* Django warning/accent yellow */
+    }
+    
+
+    .dash-container { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 12px; 
+        font-family: 'Roboto', sans-serif; 
+        margin-bottom: 20px;
+    }
+
+    /* 2. Enhanced Stat Boxes */
+    .stat-box { 
+        padding: 20px 10px; 
+        border-radius: 8px; 
+        text-align: center; 
+        color: white;
+    }
+
+    /* Teal Box: Using Django's official dark teal */
+    .stat-sales { background-color: var(--dj-accent) !important; }
+
+    /* Gold Box: Using Django's official yellow */
+    .stat-pending { 
+        background-color: var(--dj-yellow) !important; 
+        color: #264b5d !important; /* Dark text for readability on yellow */
+    }
+
+    .stat-number { 
+        font-size: 2.5em; 
+        font-weight: bold; 
+        display: block;
+        line-height: 1.1;
+    }
+    
+    .stat-label {
+        font-size: 0.85em;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* 3. The "Visible" Action Buttons */
+    .btn-row { display: flex; gap: 10px; margin: 15px 0; }
+    .quick-btn { 
+        flex: 1; 
+        padding: 15px 5px; 
+        border-radius: 6px; 
+        text-decoration: none !important; 
+        text-align: center; 
+        font-weight: bold; 
+        font-size: 0.9em;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-blue { background-color: var(--dj-accent); }
+    
+    /* FIX: High-visibility for the yellow button */
+    .btn-yellow { 
+        background-color: var(--dj-yellow) !important; /* Slightly deeper gold for better contrast */
+        color: #264b5d !important;     /* Darker text to make "VIEW PENDING" stand out */
+        border: 1px solid #d4a017;
+    }
+
+    /* 4. Request & Hot Seller Cards (The new style you liked) */
+    .info-card { 
+        background: var(--body-bg, #fff); 
+        border: 1px solid var(--border-color, #ccc); 
+        border-radius: 12px; 
+        padding: 15px; 
+        margin-top: 10px;
+    }
+    .info-card h3 { margin: 0 0 10px 0; font-size: 1em; color: var(--dj-accent); }
+
+    .request-item {
+        border-bottom: 1px solid #eee;
+        padding: 8px 0;
+    }
+    .phone-sub { font-size: 0.8em; color: #777; font-weight: bold; }
+
+    .hot-seller-box { 
+        background: #e3f2fd; 
+        border-left: 5px solid #2196f3; 
+        padding: 12px; 
+        color: #1565c0; 
+        border-radius: 4px;
+    }
+</style>
+
+<div class="dash-container">
+    <div class="stat-box stat-sales">
+        <span class="stat-number">{{ summary.sold_last_month }}</span>
+        <span class="stat-label">Sold This Month</span>
+    </div>
+    
+    <div class="stat-box stat-pending">
+        <span class="stat-number">{{ summary.on_order }}</span>
+        <span class="stat-label">Pending Orders</span>
+    </div>
+<div class="info-card" style="grid-column: span 2;">
+    <h3>🔔 Customer Requests</h3>
+    {% for req in summary.recent_requests %}
+        <div class="request-item">
+            <span class="phone-sub">{{ req.customer.phone_number }}</span><br>
+            <a href="{% url 'admin:shop_shoerequest_change' req.id %}" style="text-decoration: none; color: inherit;">
+                <strong>{{ req.description }}</strong> (Size {{ req.requested_size }})
+            </a>
+        </div>
+    {% empty %}
+        <p style="color: #999; font-size: 0.9em;">No active requests.</p>
+    {% endfor %}
+</div>
+
+    <div class="info-card" style="grid-column: span 2;">
+        <h3>🔥 Hot Seller</h3>
+        {% if summary.hot_seller %}
+            <div class="hot-seller-box">
+                Top mover: <strong>{{ summary.hot_seller.category }}</strong> in <strong>Size {{ summary.hot_seller.size }}</strong>.
+            </div>
+        {% else %}
+            <p style="text-align: center; color: #999;">Awaiting sales data...</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="btn-row">
+    <a href="{% url 'manual-sale-form' %}" class="quick-btn btn-blue">➕  RECORD SALE </a>
+    <a href="/admin/shop/order/?is_picked_up__exact=0" class="quick-btn btn-yellow">📦 VIEW ORDERS</a>
+</div>
+
+<hr style="margin: 20px 0; opacity: 0.2;">
+
+{{ block.super }}
+{% endblock %}

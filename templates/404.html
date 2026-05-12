@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px; color: #417690;">
+    <h1 style="font-size: 5em; margin-bottom: 0;">404</h1>
+    <h2 style="color: #f5dd5d;">Oops! Nothing here.</h2>
+    <p>We couldn't find the page you were looking for.</p>
+    <br>
+    <a href="{% url 'admin:index' %}" 
+       style="background: #417690; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+       Return to Dashboard
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div style="max-width: 450px; margin: 0 auto; background: var(--body-bg); padding: 20px; border: 1px solid var(--border-color); border-radius: 8px;">
+    <h2 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;">➕ Record Manual Sale</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+            
+            <input type="text" name="sku" placeholder="SKU ID (Optional)" style="padding: 10px; height: 45px; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box;">
+
+            <select name="category" required style="padding: 10px; height: 45px; display: block; width: 100%; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box; cursor: pointer;">
+                <option value="" disabled selected>Select Category</option>
+                <option value="cor">corporate</option>
+                <option value="can">canvas</option>
+                <option value="bts">boots</option>
+                <option value="des">designers</option>
+                <option value="san">sandals</option>
+            </select>
+
+            <input type="number" name="size" placeholder="Size" required style="padding: 10px; height: 45px; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box;">
+            <input type="number" name="total_price" placeholder="Total Price (₦)" required style="padding: 10px; height: 45px; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box;">
+            <input type="number" name="paid" placeholder="Amount Paid (₦)" required style="padding: 10px; height: 45px; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box;">
+            <input type="text" name="phone_number" placeholder="Customer Phone" required style="padding: 10px; height: 45px; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box;">
+            <input type="text" name="customer_name" placeholder="Customer Name (Optional)" style="padding: 10px; height: 45px; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); box-sizing: border-box;">
+            
+            <button type="submit" style="background: var(--button-bg); color: white; padding: 12px; height: 50px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px;">
+                Complete Sale & Send WhatsApp
+            </button>
+        </div>
+    </form>
+    <p style="margin-top: 20px;"><a href="/admin/shop/salesummary/" style="color: var(--link-fg);">← Back to Dashboard</a></p>
+</div>
+{% endblock %}
