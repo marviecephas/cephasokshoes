@@ -19,6 +19,8 @@ An intelligent, agentic commerce solution designed to bridge the gap between cas
 
 ## 🌟 Key Features
 
+* **Structured Database**: Robust relational schema managing `Shoes`, `Customers`, `Orders`, and `ShoeRequests` for full business traceability.
+* **Admin Interface**: A comprehensive business dashboard with real-time CRUD (Create, Read, Update, Delete) implementation for inventory control.
 * **Natural Language Search**: "Do you have size 45 male canvas?" triggers a database lookup and returns real-time results.
 * **Automatic Media Delivery**: Dynamically generates Absolute URIs to send shoe photos directly to the user's WhatsApp.
 * **Balance Tracking**: Customers can check their debt status instantly based on their unique phone identifier.
@@ -34,7 +36,7 @@ git clone [https://github.com/marviecephas/cephasokshoes.git](https://github.com
 cd cephasokshoes
 python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt```
 
 ### 2. Environment Setup
 Create a `.env` file in the root directory:
@@ -42,18 +44,18 @@ Create a `.env` file in the root directory:
 ```plaintext
 GEMINI_API_KEY=your_gemini_key
 TWILIO_SID=your_twilio_sid
-TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_AUTH_TOKEN=your_auth_token```
 
 ### 3. Initialize & Run
 ```bash
 python manage.py migrate
-python manage.py runserver
+python manage.py runserver```
 
 ### 4. Tunneling
 In a new Termux session, run:
 
 ```bash
-cloudflared tunnel --url [http://127.0.0.1:8000](http://127.0.0.1:8000)
+cloudflared tunnel --url [http://127.0.0.1:8000](http://127.0.0.1:8000)```
 
 ## 📜 License
 
