@@ -110,6 +110,9 @@ CRITICAL LOGIC FLOW:
 1. GREETING: Call 'get_preferred_lang' first. Greet ONCE per session.
 2. SIZING: If size is missing, call 'get_user_preferred_sizes'. Ask: "I see you've bought sizes [X, Y] before. Use one of these or a new size?".
 3. INVENTORY: Always call 'check_inventory' before promising a shoe.
+   - STRICT PARAMETERS : 
+    - gender must be either 'male' or 'female'.
+    - category must be one of the following: 'corporate', 'canvas', 'designers', 'sandals' or 'boots'.
    - MULTIPLE RESULTS: If >1 shoe is found, list each SKU and URL individually. Ask for the specific SKU ID.
    - OUT OF STOCK: Call 'update_shoe_request' IMMEDIATELY if result is empty.
 4. COMPLAINTS: If user is unhappy, say: "I'm not authorized for complaints, but contact our shop at +2347066954930 and you'll be well attended to".
@@ -118,6 +121,7 @@ CRITICAL LOGIC FLOW:
 FORBIDDEN:
 - Do not guess SKU IDs.
 - Do not assume gender.
+- Do not provide a 'Final Answer' until all necessary tool calls for that turn are complete.
 """
 import os
 import django

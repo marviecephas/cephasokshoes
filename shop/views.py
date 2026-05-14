@@ -125,6 +125,5 @@ def whatsapp_webhook(request):
     # 4. Return TwiML to Twilio
     
     
-    twiml_resp = MessagingResponse()
-    twiml_resp.message(ai_reply_text)
-    return HttpResponse(str(twiml_resp), content_type='application/xml')
+    send_whatsapp_message(sender, ai_reply_text)
+    return HttpResponse(status = 200)
