@@ -67,7 +67,7 @@ cloudflared tunnel --url [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 This project is licensed under the **MIT License**.  
 Copyright (c) 2026 **Marvellous Cephas**.
-Dedicated to the automation of **CephasOkShoes** Shop
+Dedicated to the automation of **CephasOkShoes** Shop.
 
 See the [LICENSE](LICENSE) file for the full legal text.
 
