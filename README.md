@@ -23,6 +23,8 @@ An intelligent, agentic commerce solution designed to bridge the gap between cas
 * **Admin Interface**: A comprehensive business dashboard with real-time CRUD (Create, Read, Update, Delete) implementation for inventory control.
 * **Natural Language Search**: "Do you have size 45 male canvas?" triggers a database lookup and returns real-time results.
 * **Automatic Media Delivery**: Dynamically generates Absolute URIs to send shoe photos directly to the user's WhatsApp.
+* **Automated Marketing**: Integrated **APScheduler** that sends randomized health and shoe-care tips to the entire customer base every 5 days.
+* **Competing Order Logic**: Smart handling of "Pending" vs "Picked Up" states, automatically notifying other interested customers when a specific pair is sold.
 * **Balance Tracking**: Customers can check their debt status instantly based on their unique phone identifier.
 * **Smart Preferences**: Detects and saves preferred language (English, Pidgin, Yoruba) and sizing history for personalized service.
 
