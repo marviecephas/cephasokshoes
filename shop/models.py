@@ -128,7 +128,7 @@ class Order(models.Model):
             
             # This prevents the order from being saved to the database
               return
-        if is_new:
+        if is_new and not getattr(self, '_initial_pickup_status', False):
         # Send initial confirmation to the person who just ordered
             initial_msg = f"Order received for {self.shoe.sku_id}! 👟 Please ensure to pick the shoes up immediately as they may be sold before you come pick them up. We'll notify you if so."
             send_whatsapp_message(self.customer.phone_number, initial_msg)
@@ -160,7 +160,25 @@ class Order(models.Model):
         
             competing_orders.delete()
             self._initial_pickup_status = True
+            
+        if self.is_picked_up and is_new:
+        # Update the actual shoe status
+            if self.shoe.status != 'sold':
+                self.shoe.status = 'sold'
+                self.shoe.save(update_fields=['status'])
 
+        # Notify the person who actually bought it
+            winner_msg = f"Oshey! 🙌 Thank you for picking up your shoes (Ref: {self.shoe.sku_id}). We hope you love them! 😊"
+            send_whatsapp_message(self.customer.phone_number, winner_msg)
+
+        # Notify and Delete/Cancel competing orders
+            competing_orders = Order.objects.filter(shoe=self.shoe).exclude(pk=self.pk)
+            for competitor in competing_orders:
+                sold_out_msg = f"Sold Out! The shoes ({self.shoe.sku_id})👟 you ordered have been picked up by another customer. Please check out other shoes or stay tuned for our next restock!"
+                send_whatsapp_message(competitor.customer.phone_number, sold_out_msg)
+        
+            competing_orders.delete()
+            
         super().save(*args, **kwargs)  
     
 

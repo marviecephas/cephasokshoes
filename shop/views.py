@@ -7,16 +7,20 @@ import time
 from .utils import send_whatsapp_message 
 from django.shortcuts import render
 from django.utils import timezone
+from .models import Shoe, Customer, Order
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
 
 def record_manual_sale(sku, category, size, total_price, paid, phone_number, customer_name=None):
-    from .models import Shoe, Customer, Order
+    
 
     # 1. Handle the Shoe first (Create it if your dad hasn't yet)
-    if not sku:
+    cleaned_sku = sku.strip()
+    cleaned_number = f'+234{phone_number.strip()[1:]}' if (phone_number[0] == '0') else phone_number.strip()
+    
+    if not cleaned_sku:
         shoe_obj = Shoe.objects.create(
             category=category,
             size=size,
@@ -25,8 +29,8 @@ def record_manual_sale(sku, category, size, total_price, paid, phone_number, cus
         )
     else:
         # If a SKU IS provided, find it or create it
-        shoe_obj, _ = Shoe.objects.get_or_create(
-            sku_id=sku,
+        shoe_obj, _ = Shoe.objects.update_or_create(
+            sku_id=cleaned_sku,
             defaults={
                 'category': category,
                 'size': size,
@@ -34,12 +38,14 @@ def record_manual_sale(sku, category, size, total_price, paid, phone_number, cus
                 'status': 'sold',
             }
         )
+        shoe_obj.save()
 
     # 2. Now handle the Customer
     customer_obj, _ = Customer.objects.get_or_create(
-        phone_number=phone_number,
+        phone_number=cleaned_number,
         defaults={'name': customer_name}
     )
+    customer_obj.save()
 
     # 3. Create the Order (This handles the "Owing" math)
     order = Order.objects.create(
@@ -50,8 +56,6 @@ def record_manual_sale(sku, category, size, total_price, paid, phone_number, cus
         is_picked_up = True,
     )
     
-    msg = f"Oshey {customer_obj.name or ''}! 🙌 Thank you for your purchase of {category} (Ref: {sku}). We value your patronage! 😊"
-    send_whatsapp_message(phone_number, msg)
     return order
 session_memory = {}
 SESSION_TIMEOUT = 14400
@@ -127,3 +131,4 @@ def whatsapp_webhook(request):
     
     send_whatsapp_message(sender, ai_reply_text)
     return HttpResponse(status = 200)
+    
